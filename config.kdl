@@ -149,17 +149,16 @@ keybinds clear-defaults=true {
 
         bind "Alt t" { NewTab; }
         
-        bind "Alt h" { MoveFocusOrTab "left"; }
-        bind "Alt i" { MoveTab "left"; }
-        bind "Alt j" { MoveFocus "down"; }
-        bind "Alt k" { MoveFocus "up"; }
-        bind "Alt l" { MoveFocusOrTab "right"; }
+        bind "Alt a" { MoveFocusOrTab "left"; }
+        bind "Alt s" { MoveFocus "down"; }
+        bind "Alt w" { MoveFocus "up"; }
+        bind "Alt d" { MoveFocusOrTab "right"; }
 
 
-        bind "Alt w" { Resize "Increase up"; }
-        bind "Alt s" { Resize "Increase down"; }
-        bind "Alt a" { Resize "Increase left"; }
-        bind "Alt d" { Resize "Increase right"; }
+        bind "Alt k" { Resize "Increase up"; }
+        bind "Alt j" { Resize "Increase down"; }
+        bind "Alt h" { Resize "Increase left"; }
+        bind "Alt l" { Resize "Increase right"; }
 
         bind "Alt 1" { GoToTab 1; }
         bind "Alt 2" { GoToTab 2; }
