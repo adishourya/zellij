@@ -4,6 +4,7 @@
 
 keybinds clear-defaults=true {
     locked {
+        // like a prefix key
         bind "Ctrl a" { SwitchToMode "normal"; }
     }
     pane {
@@ -139,26 +140,25 @@ keybinds clear-defaults=true {
             SwitchToMode "locked"
         }
     }
+
+    // basics no prefix key
     shared_among "normal" "locked" {
+        // floating and zen
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Alt z" { ToggleFocusFullscreen;}
-        bind "Alt n" { NewPane; }
+        bind "Alt x" { CloseFocus;}
+        bind "Alt p" { TogglePaneFrames;}
 
+        // new panes
         bind "Alt -" { NewPane "down"; }
         bind "Alt =" { NewPane "right"; }
-
         bind "Alt t" { NewTab; }
-        
+
+        // focus
         bind "Alt a" { MoveFocusOrTab "left"; }
         bind "Alt s" { MoveFocus "down"; }
         bind "Alt w" { MoveFocus "up"; }
         bind "Alt d" { MoveFocusOrTab "right"; }
-
-
-        bind "Alt k" { Resize "Increase up"; }
-        bind "Alt j" { Resize "Increase down"; }
-        bind "Alt h" { Resize "Increase left"; }
-        bind "Alt l" { Resize "Increase right"; }
 
         bind "Alt 1" { GoToTab 1; }
         bind "Alt 2" { GoToTab 2; }
@@ -170,6 +170,13 @@ keybinds clear-defaults=true {
         bind "Alt 8" { GoToTab 8; }
         bind "Alt 9" { GoToTab 9; }
 
+        // resizing
+        bind "Alt k" { Resize "Increase up"; }
+        bind "Alt j" { Resize "Increase down"; }
+        bind "Alt h" { Resize "Increase left"; }
+        bind "Alt l" { Resize "Increase right"; }
+
+        //session manager
         bind "Alt o" {
             LaunchOrFocusPlugin "session-manager" {
                 move_to_focused_tab true
@@ -274,7 +281,7 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-// theme "dracula"
+theme "dracula"
  
 // Choose the base input mode of zellij.
 // Default: normal
