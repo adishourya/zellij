@@ -7,6 +7,7 @@ keybinds clear-defaults=true {
         // like a prefix key
         bind "Ctrl a" { SwitchToMode "normal"; }
     }
+    // prefix + p
     pane {
         bind "left" { MoveFocus "left"; }
         bind "down" { MoveFocus "down"; }
@@ -29,6 +30,7 @@ keybinds clear-defaults=true {
         bind "z" { TogglePaneFrames; SwitchToMode "locked"; }
         bind "tab" { SwitchFocus; }
     }
+    // prefix + t
     tab {
         bind "left" { GoToPreviousTab; }
         bind "down" { GoToNextTab; }
@@ -57,6 +59,7 @@ keybinds clear-defaults=true {
         bind "x" { CloseTab; SwitchToMode "locked"; }
         bind "tab" { ToggleTab; }
     }
+    // prefix + r
     resize {
         bind "left" { Resize "Increase left"; }
         bind "down" { Resize "Increase down"; }
@@ -74,6 +77,7 @@ keybinds clear-defaults=true {
         bind "l" { Resize "Increase right"; }
         bind "r" { SwitchToMode "normal"; }
     }
+    // prefix + m
     move {
         bind "left" { MovePane "left"; }
         bind "down" { MovePane "down"; }
@@ -88,6 +92,7 @@ keybinds clear-defaults=true {
         bind "p" { MovePaneBackwards; }
         bind "tab" { MovePane; }
     }
+    // prefix + s
     scroll {
         bind "Alt left" { MoveFocusOrTab "left"; SwitchToMode "locked"; }
         bind "Alt down" { MoveFocus "down"; SwitchToMode "locked"; }
@@ -148,10 +153,17 @@ keybinds clear-defaults=true {
         bind "Alt z" { ToggleFocusFullscreen;}
         bind "Alt x" { CloseFocus;}
         bind "Alt p" { TogglePaneFrames;}
+        bind "Alt r" { SwitchToMode "renamepane"; PaneNameInput 0; }
+        bind "Alt g" {
+            LaunchOrFocusPlugin "filepicker" {
+                close_on_selection true // comment this out to have the filepicker remain open even after selecting a file
+            };
+        }
 
         // new panes
         bind "Alt -" { NewPane "down"; }
         bind "Alt =" { NewPane "right"; }
+        bind "Alt n" { NewPane "stacked";}
         bind "Alt t" { NewTab; }
 
         // focus
@@ -281,7 +293,7 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-// theme "dracula"
+theme "ansi"
  
 // Choose the base input mode of zellij.
 // Default: normal

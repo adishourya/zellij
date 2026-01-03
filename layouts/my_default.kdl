@@ -11,7 +11,19 @@ layout {
     //     pane size="30%"
     // }
 
-    pane split_direction="vertical"{
-        pane
+    // pane split_direction="vertical"{
+    //     pane {
+    //         plugin location="strider"
+    //     }
+    // }
+
+    pane split_direction="vertical" {
+        pane {
+            plugin location="strider"{
+                close_on_selection true
+            }
+        }
     }
+
+    
 }
