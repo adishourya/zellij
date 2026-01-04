@@ -157,7 +157,7 @@ keybinds clear-defaults=true {
         bind "Alt z" { ToggleFocusFullscreen;}
         bind "Alt x" { CloseFocus;}
         bind "Alt p" { TogglePaneFrames;}
-        bind "Alt r" { SwitchToMode "renamepane"; PaneNameInput 0; }
+        bind "Alt r" { SwitchToMode "renametab"; TabNameInput 0; }
 
         // new panes
         bind "Alt -" { NewPane "down"; }

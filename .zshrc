@@ -143,10 +143,10 @@ kitty-reload() {
 # eval "$(starship init zsh)"
 
 # Check if we are in a Zellij session
-if [[ -n "$ZELLIJ_SESSION_NAME" ]]; then
-  # This adds [session_name] to the start of your prompt
-  PROMPT="[%F{yellow}$ZELLIJ_SESSION_NAME%f] $PROMPT"
-fi
+# if [[ -n "$ZELLIJ_SESSION_NAME" ]]; then
+#   # This adds [session_name] to the start of your prompt
+#   PROMPT="[%F{yellow}$ZELLIJ_SESSION_NAME%f] $PROMPT"
+# fi
 
 zellij_attach_fzf() {
   local session
@@ -172,14 +172,10 @@ yy-widget() {
   # Leave ZLE cleanly
   zle -I
 
-  local tmp="$(mktemp -t yazi-cwd.XXXXXX)"
-  yazi "$@" --cwd-file="$tmp"
-
-  if [[ -s "$tmp" ]]; then
-    local cwd
-    cwd="$(<"$tmp")"
-    [[ "$cwd" != "$PWD" ]] && cd -- "$cwd"
-  fi
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 
   rm -f -- "$tmp"
 
@@ -190,3 +186,33 @@ yy-widget() {
 zle -N yy-widget
 bindkey '^[y' yy-widget
 
+if [[ -n "$ZELLIJ" ]]; then
+  _zellij_update_tabname() {
+    local current_dir="$PWD"
+    local tab_name
+
+    if [[ "$current_dir" == "$HOME" ]]; then
+      tab_name="~"
+    else
+      tab_name="${current_dir:t}"
+    fi
+
+    if command git rev-parse --is-inside-work-tree &>/dev/null; then
+      local git_root
+      git_root="$(git rev-parse --show-superproject-working-tree 2>/dev/null)"
+      [[ -z "$git_root" ]] && git_root="$(git rev-parse --show-toplevel)"
+
+      if [[ "${git_root:A:l}" != "${current_dir:A:l}" ]]; then
+        tab_name="${git_root:t}/${current_dir:t}"
+      fi
+    fi
+
+    nohup zellij action rename-tab "$tab_name" >/dev/null 2>&1 &!
+  }
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _zellij_update_tabname
+
+  # run once on shell start
+  _zellij_update_tabname
+fi

@@ -17,16 +17,18 @@ themes {
             emphasis_3 175 156 255   // Violet
         }
         ribbon_selected {
-            base 24 24 24            // Gray 10
-            background 168 204 124   // Lime
+            background 24 24 24            // Gray 10
+            base 77 155 248    // Blue 100
+            // background 168 204 124   // Lime
             emphasis_0 204 124 138   // Coral
             emphasis_1 224 155 112   // Orange
             emphasis_2 175 156 255   // Violet
-            emphasis_3 77 155 248    // Blue 100
+            // emphasis_3 77 155 248    // Blue 100
+            emphasis_3 168 204 124   // Lime
         }
         ribbon_unselected {
-            base 24 24 24            // Gray 10
-            background 137 137 137   // Gray 90
+            background 24 24 24            // Gray 10
+            base 137 137 137   // Gray 90
             emphasis_0 204 124 138   // Coral
             emphasis_1 209 209 209   // Gray 120
             emphasis_2 77 155 248    // Blue 100

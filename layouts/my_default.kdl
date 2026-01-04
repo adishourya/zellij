@@ -1,9 +1,9 @@
 layout {
 
     // bar
-    // pane size=1 borderless=true {
-    //     plugin location="zellij:compact-bar"
-    // }
+    pane size=1 borderless=true {
+        plugin location="zellij:compact-bar"
+    }
 
     // 2-panes
     // pane split_direction="vertical" {
@@ -27,5 +27,9 @@ layout {
     //     };
     // }
 
+    // bar
+    // pane size=1 borderless=true {
+    //     plugin location="zellij:compact-bar"
+    // }
     
 }
