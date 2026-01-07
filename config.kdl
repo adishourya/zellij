@@ -106,6 +106,7 @@ keybinds clear-defaults=true {
         bind "Alt l" { MoveFocusOrTab "right"; SwitchToMode "locked"; }
         bind "s" { SwitchToMode "normal"; }
     }
+    // prefix + s + f
     search {
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "n" { Search "down"; }
@@ -113,6 +114,7 @@ keybinds clear-defaults=true {
         bind "p" { Search "up"; }
         bind "w" { SearchToggleOption "Wrap"; }
     }
+    // prefix+o
     session {
         bind "a" {
             LaunchOrFocusPlugin "zellij:about" {
@@ -152,17 +154,19 @@ keybinds clear-defaults=true {
         bind "Alt Shift d" { DumpScreen "/tmp/dumped_zellij.txt"; }
         
         // floating and zen
-        bind "Alt tab" { ToggleTab; }
+        bind "Alt tab" { GoToNextTab; }
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Alt z" { ToggleFocusFullscreen;}
         bind "Alt x" { CloseFocus;}
         bind "Alt p" { TogglePaneFrames;}
+        bind "Alt i" { TogglePanePinned; SwitchToMode "locked"; }
         bind "Alt r" { SwitchToMode "renametab"; TabNameInput 0; }
 
         // new panes
-        bind "Alt -" { NewPane "down"; }
-        bind "Alt =" { NewPane "right"; }
-        bind "Alt n" { NewPane "stacked";}
+        bind "Alt [" { NewPane "down"; }
+        bind "Alt ]" { NewPane "right"; }
+        bind "Alt g" { NewPane "stacked";}
+        bind "Alt n" { NewPane;}
         bind "Alt t" { NewTab; }
 
         // focus

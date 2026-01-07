@@ -106,6 +106,8 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # alias vim="nvim"
 alias vim="hx"
+# bind alt-v to run vim .
+bindkey -s '^[v' 'vim .\n'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -184,15 +186,72 @@ yy-widget() {
 }
 
 zle -N yy-widget
-bindkey '^[y' yy-widget
+bindkey '^[-' yy-widget
 
+
+# tab name as the directory its on
+# if [[ -n "$ZELLIJ" ]]; then
+#   _zellij_update_tabname() {
+#     local current_dir="$PWD"
+#     local tab_name
+
+    
+#     if [[ "$current_dir" == "$HOME" ]]; then
+#       # use session name as default
+#       # tab_name="/Users/adi/"
+#       # tab_name="$ZELLIJ_SESSION_NAME"
+#       tab_name="@home"
+#     else
+#       tab_name="${current_dir:t}"
+#     fi
+
+#     if command git rev-parse --is-inside-work-tree &>/dev/null; then
+#       local git_root
+#       git_root="$(git rev-parse --show-superproject-working-tree 2>/dev/null)"
+#       [[ -z "$git_root" ]] && git_root="$(git rev-parse --show-toplevel)"
+
+#       if [[ "${git_root:A:l}" != "${current_dir:A:l}" ]]; then
+#         tab_name="${git_root:t}/${current_dir:t}"
+#       fi
+#     fi
+
+#     # Truncate to 15 chars + "..."
+#     local max=20
+#     if (( ${#tab_name} > max )); then
+#       tab_name="${tab_name[1,max]}..."
+#     fi
+
+#     nohup zellij action rename-tab "$tab_name" >/dev/null 2>&1 &!
+#   }
+
+#   autoload -Uz add-zsh-hook
+#   add-zsh-hook chpwd _zellij_update_tabname
+
+#   # run once on shell start
+#   _zellij_update_tabname
+# fi
+
+# tab name as the program its running
 if [[ -n "$ZELLIJ" ]]; then
-  _zellij_update_tabname() {
+  autoload -Uz add-zsh-hook
+
+  _zellij_rename() {
+    local name="$1"
+    local max=20
+
+    if (( ${#name} > max )); then
+      name="${name[1,max]}..."
+    fi
+
+    nohup zellij action rename-tab "$name" >/dev/null 2>&1 &!
+  }
+
+  _zellij_path_name() {
     local current_dir="$PWD"
     local tab_name
 
     if [[ "$current_dir" == "$HOME" ]]; then
-      tab_name="~"
+      tab_name="@home"
     else
       tab_name="${current_dir:t}"
     fi
@@ -207,12 +266,26 @@ if [[ -n "$ZELLIJ" ]]; then
       fi
     fi
 
-    nohup zellij action rename-tab "$tab_name" >/dev/null 2>&1 &!
+    _zellij_rename "$tab_name"
   }
 
-  autoload -Uz add-zsh-hook
-  add-zsh-hook chpwd _zellij_update_tabname
+  # Before command → program name
+  _zellij_preexec() {
+    local cmd="$1"
+    local prog="${cmd%% *}"
+    prog="${prog:t}"
 
-  # run once on shell start
-  _zellij_update_tabname
+    _zellij_rename "$prog"
+  }
+
+  # After command → path again
+  _zellij_precmd() {
+    _zellij_path_name
+  }
+
+  add-zsh-hook preexec _zellij_preexec
+  add-zsh-hook precmd _zellij_precmd
+
+  # Initial name
+  _zellij_path_name
 fi
